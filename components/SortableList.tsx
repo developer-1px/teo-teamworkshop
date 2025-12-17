@@ -65,6 +65,15 @@ const getThemeStyles = (theme: string) => {
   };
 };
 
+// Common styles to prevent native mobile interactions (selection, zoom, callouts)
+const mobileInteractionStyles: React.CSSProperties = {
+  touchAction: 'manipulation',
+  WebkitTouchCallout: 'none', // iOS Safari context menu disable
+  WebkitUserSelect: 'none',   // iOS Safari text selection disable
+  userSelect: 'none',         // Standard text selection disable
+  WebkitTapHighlightColor: 'transparent',
+};
+
 // --- Sortable Item Component ---
 interface SortableItemProps {
   id: string;
@@ -84,11 +93,12 @@ const SortableItem: React.FC<SortableItemProps> = ({ id, item, rank, isActive, t
     isDragging,
   } = useSortable({ id });
 
-  const style = {
+  const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
     transition,
     zIndex: isDragging ? 50 : 'auto',
     opacity: isDragging ? 0.3 : 1,
+    ...mobileInteractionStyles,
   };
 
   return (
@@ -98,19 +108,19 @@ const SortableItem: React.FC<SortableItemProps> = ({ id, item, rank, isActive, t
       {...attributes}
       {...listeners}
       className={`
-        relative aspect-square flex flex-col p-3 rounded-2xl border-2 transition-all select-none touch-manipulation bg-white
+        relative aspect-square flex flex-col p-3 rounded-2xl border-2 transition-all bg-white cursor-grab active:cursor-grabbing
         ${isActive ? `${themeStyles.activeBorder} ring-4 ${themeStyles.activeRing}` : 'border-gray-100 shadow-sm'}
         hover:border-gray-300
       `}
     >
       <div className={`
-        absolute top-2 left-2 w-5 h-5 flex items-center justify-center rounded-full text-[10px] font-bold shadow-sm backdrop-blur-[1px]
+        absolute top-2 left-2 w-5 h-5 flex items-center justify-center rounded-full text-[10px] font-bold shadow-sm backdrop-blur-[1px] pointer-events-none
         ${rank <= 3 ? themeStyles.rankBadgeTop : themeStyles.rankBadgeNormal}
       `}>
         {rank}
       </div>
       
-      <div className="flex-1 flex items-center justify-center text-center mt-3 overflow-hidden px-1">
+      <div className="flex-1 flex items-center justify-center text-center mt-3 overflow-hidden px-1 pointer-events-none">
         <span className="text-[11px] leading-tight font-bold text-gray-700 line-clamp-3 break-words">
           {item.name}
         </span>
@@ -121,7 +131,10 @@ const SortableItem: React.FC<SortableItemProps> = ({ id, item, rank, isActive, t
 
 // --- Item Component for Overlay (Drag Preview) ---
 const ItemOverlay: React.FC<{ item: Item; rank: number; themeStyles: ReturnType<typeof getThemeStyles> }> = ({ item, rank, themeStyles }) => (
-  <div className={`aspect-square flex flex-col p-3 rounded-2xl border-2 ${themeStyles.overlayBorder} bg-white shadow-2xl opacity-95 scale-105 cursor-grabbing`}>
+  <div 
+    className={`aspect-square flex flex-col p-3 rounded-2xl border-2 ${themeStyles.overlayBorder} bg-white shadow-2xl opacity-95 scale-105 cursor-grabbing`}
+    style={mobileInteractionStyles}
+  >
     <div className={`absolute top-2 left-2 w-5 h-5 flex items-center justify-center rounded-full text-[10px] font-bold ${themeStyles.overlayBg} text-white shadow-sm`}>
       {rank}
     </div>
@@ -160,10 +173,17 @@ const SortableList: React.FC<SortableListProps> = ({
 
   // Sensors
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8, // For mouse: slight movement required
+      },
+    }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 150,
+        // Critical for mobile:
+        // delay: Waits 250ms before starting drag.
+        // tolerance: If user moves finger >5px during that 250ms, it's a SCROLL, not a drag.
+        delay: 250, 
         tolerance: 5,
       },
     }),
@@ -176,6 +196,11 @@ const SortableList: React.FC<SortableListProps> = ({
     const { active } = event;
     setActiveId(active.id as string);
     setOverId(active.id as string);
+    
+    // Haptic Feedback for better mobile UX
+    if (window.navigator && window.navigator.vibrate) {
+      window.navigator.vibrate(50);
+    }
   };
 
   const handleDragOver = (event: DragOverEvent) => {
@@ -255,7 +280,7 @@ const SortableList: React.FC<SortableListProps> = ({
             </div>
           ) : (
             <p className="text-gray-400 text-sm font-medium text-center w-full">
-              타일을 길게 눌러 드래그하여 중요도 순으로 배치하세요
+              타일을 <b>꾹 눌러서</b>(0.3초) 드래그하세요
             </p>
           )}
         </div>
