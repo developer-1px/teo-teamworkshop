@@ -1,20 +1,54 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 🚀 팀워크 생존 게임 (Teamwork Survival Game)
 
-# Run and deploy your AI Studio app
+NASA와 미국 해안경비대의 고전적인 생존 시나리오를 바탕으로 한 **디지털 팀빌딩 워크숍 도구**입니다.
+모바일 웹 환경에 최적화되어 있어 별도의 종이와 펜 없이도 스마트폰만으로 언제 어디서나 팀워크 훈련을 진행할 수 있습니다.
 
-This contains everything you need to run your app locally.
+## 🎯 기획 의도
 
-View your app in AI Studio: https://ai.studio/apps/drive/1AWiTDWBmKgs-dcqflnvW1g2Bk2iX9Tvw
+이 프로젝트는 단순한 생존 지식 퀴즈가 아닙니다. **'집단 지성'의 힘을 체험하고 효과적인 의사소통 방식을 배우는 것**이 핵심 목표입니다.
 
-## Run Locally
+- **협업의 가치 발견**: 혼자 고민할 때보다 팀이 함께할 때 더 나은 결과를 만들 수 있음을 경험합니다.
+- **합의(Consensus) 훈련**: 단순히 다수결로 정하는 것이 아니라, 서로를 설득하고 경청하며 모두가 동의하는 결론을 도출하는 과정을 연습합니다.
+- **객관적 피드백**: '시너지 점수'를 통해 우리 팀의 소통 방식이 얼마나 효과적이었는지 수치로 확인합니다.
 
-**Prerequisites:**  Node.js
+## 🎲 포함된 시나리오
 
+### 1. 🌕 달 생존 게임 (NASA Moon Survival)
+우주선 고장으로 달 표면에 불시착했습니다. 모선까지 200km를 이동해야 하는 극한의 상황에서, 남은 15개의 장비 중 생존에 가장 필요한 물건은 무엇일까요?
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### 2. 🌊 해상 조난 게임 (Lost at Sea)
+대서양 횡단 중 요트가 침몰했습니다. 구조대가 올 때까지 바다 한가운데서 살아남기 위해 가장 중요한 물품의 우선순위를 정해야 합니다.
+*(워크숍 진행 흐름 조절을 위해 간단한 비밀번호 잠금 기능이 포함되어 있습니다)*
+
+## 🕹️ 게임 진행 프로세스
+
+웹앱은 워크숍의 각 단계를 매끄럽게 연결해줍니다.
+
+1.  **미션 브리핑 (Briefing)**:
+    - 생존 상황에 몰입하고 미션 목표를 명확히 이해합니다.
+2.  **개인 순위 결정 (Step 1)**:
+    - 타일 드래그 & 드롭 UI를 통해 쉽고 직관적으로 개인의 생각을 정리합니다.
+3.  **팀 순위 결정 (Step 2)**:
+    - 팀원들과 치열하게 토론하며 합의된 팀의 순위를 입력합니다.
+4.  **결과 및 회고 (Report)**:
+    - **점수 시각화**: 개인 점수와 팀 점수를 그래프로 비교합니다.
+    - **시너지 계산기**: 팀 내 최고 우수자(Ace)의 점수와 팀 점수를 비교하여, 팀워크가 플러스 효과를 냈는지 마이너스 효과를 냈는지 자동 계산합니다.
+    - **전문가 해설**: 각 항목에 대한 전문가(NASA/해안경비대)의 과학적 근거를 확인합니다.
+
+## 🛠️ 기술 스택
+
+- **Core**: React, TypeScript, Vite
+- **Styling**: Tailwind CSS (모바일 반응형 디자인)
+- **Interaction**: @dnd-kit (부드러운 터치 드래그 앤 드롭 구현)
+- **Visualization**: Recharts (결과 데이터 시각화)
+
+## 📢 활용 가이드
+
+이 도구는 퍼실리테이터(진행자)가 있는 오프라인 또는 온라인(Zoom 등) 워크숍 환경에서 가장 효과적입니다.
+
+1.  참가자들에게 웹사이트 링크를 공유합니다.
+2.  진행자의 안내에 따라 단계별로 입력을 진행합니다.
+3.  결과 화면을 보며 팀의 소통 방식에 대해 회고하는 시간을 갖습니다.
+
+---
+*Note: 본 게임에 포함된 정답과 해설은 전문가들이 개발한 훈련 자료를 바탕으로 구성되었습니다.*
