@@ -1,0 +1,5 @@
+{
+  "name": "팀워크 생존 게임",
+  "description": "NASA 달 생존 게임과 해상 조난 생존 게임을 위한 모바일 워크숍 도구입니다.",
+  "requestFramePermissions": []
+}
