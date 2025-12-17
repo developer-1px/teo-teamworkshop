@@ -4,7 +4,7 @@ import {
   DndContext,
   closestCenter,
   KeyboardSensor,
-  PointerSensor,
+  MouseSensor,
   TouchSensor,
   useSensor,
   useSensors,
@@ -173,9 +173,10 @@ const SortableList: React.FC<SortableListProps> = ({
 
   // Sensors
   const sensors = useSensors(
-    useSensor(PointerSensor, {
+    // Use MouseSensor for mouse interactions to avoid conflict with TouchSensor on hybrid devices
+    useSensor(MouseSensor, {
       activationConstraint: {
-        distance: 8, // For mouse: slight movement required
+        distance: 8, // For mouse: movement required
       },
     }),
     useSensor(TouchSensor, {
@@ -280,7 +281,7 @@ const SortableList: React.FC<SortableListProps> = ({
             </div>
           ) : (
             <p className="text-gray-400 text-sm font-medium text-center w-full">
-              타일을 <b>꾹 눌러서</b>(0.3초) 드래그하세요
+              타일을 <b>꾹 눌러서</b>(0.25초) 드래그하세요
             </p>
           )}
         </div>
