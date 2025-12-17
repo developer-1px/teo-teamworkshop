@@ -40,10 +40,10 @@ const getThemeStyles = (theme: string) => {
     return {
       activeBorder: 'border-cyan-500',
       activeRing: 'ring-cyan-200',
-      rankBadgeTop: 'bg-cyan-600 text-white',
-      rankBadgeNormal: 'bg-gray-100 text-gray-600',
+      rankBadgeTop: 'bg-cyan-600/80 text-white',
+      rankBadgeNormal: 'bg-gray-100/80 text-gray-600',
       overlayBorder: 'border-cyan-600',
-      overlayBg: 'bg-cyan-600',
+      overlayBg: 'bg-cyan-600/90',
       previewPanelBg: 'bg-cyan-50',
       previewPanelBorder: 'border-cyan-200',
       previewPanelIcon: 'bg-cyan-600',
@@ -54,10 +54,10 @@ const getThemeStyles = (theme: string) => {
   return {
     activeBorder: 'border-slate-500',
     activeRing: 'ring-slate-200',
-    rankBadgeTop: 'bg-slate-700 text-white',
-    rankBadgeNormal: 'bg-gray-100 text-gray-600',
+    rankBadgeTop: 'bg-slate-700/80 text-white',
+    rankBadgeNormal: 'bg-gray-100/80 text-gray-600',
     overlayBorder: 'border-slate-700',
-    overlayBg: 'bg-slate-700',
+    overlayBg: 'bg-slate-700/90',
     previewPanelBg: 'bg-slate-50',
     previewPanelBorder: 'border-slate-200',
     previewPanelIcon: 'bg-slate-700',
@@ -104,13 +104,13 @@ const SortableItem: React.FC<SortableItemProps> = ({ id, item, rank, isActive, t
       `}
     >
       <div className={`
-        absolute top-2 left-2 w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold shadow-sm
+        absolute top-2 left-2 w-5 h-5 flex items-center justify-center rounded-full text-[10px] font-bold shadow-sm backdrop-blur-[1px]
         ${rank <= 3 ? themeStyles.rankBadgeTop : themeStyles.rankBadgeNormal}
       `}>
         {rank}
       </div>
       
-      <div className="flex-1 flex items-center justify-center text-center mt-4 overflow-hidden px-1">
+      <div className="flex-1 flex items-center justify-center text-center mt-3 overflow-hidden px-1">
         <span className="text-[11px] leading-tight font-bold text-gray-700 line-clamp-3 break-words">
           {item.name}
         </span>
@@ -122,10 +122,10 @@ const SortableItem: React.FC<SortableItemProps> = ({ id, item, rank, isActive, t
 // --- Item Component for Overlay (Drag Preview) ---
 const ItemOverlay: React.FC<{ item: Item; rank: number; themeStyles: ReturnType<typeof getThemeStyles> }> = ({ item, rank, themeStyles }) => (
   <div className={`aspect-square flex flex-col p-3 rounded-2xl border-2 ${themeStyles.overlayBorder} bg-white shadow-2xl opacity-95 scale-105 cursor-grabbing`}>
-    <div className={`absolute top-2 left-2 w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold ${themeStyles.overlayBg} text-white shadow-sm`}>
+    <div className={`absolute top-2 left-2 w-5 h-5 flex items-center justify-center rounded-full text-[10px] font-bold ${themeStyles.overlayBg} text-white shadow-sm`}>
       {rank}
     </div>
-    <div className="flex-1 flex items-center justify-center text-center mt-4">
+    <div className="flex-1 flex items-center justify-center text-center mt-3">
        <span className="text-xs leading-tight font-bold text-gray-900">
           {item.name}
         </span>
