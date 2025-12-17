@@ -58,18 +58,18 @@ const App: React.FC = () => {
   const getIntroTheme = (themeColor: string) => {
     if (themeColor === 'cyan') {
       return {
-        badge: 'bg-cyan-100 text-cyan-800',
-        tipsBorder: 'border-cyan-400',
-        tipsBg: 'bg-cyan-50',
+        badge: 'bg-cyan-50 text-cyan-700 border border-cyan-200',
+        tipsBorder: 'border-cyan-300',
+        tipsBg: 'bg-cyan-50/50',
         tipsTitle: 'text-cyan-900',
         tipsText: 'text-cyan-800',
         button: 'bg-cyan-700 hover:bg-cyan-600 shadow-cyan-900/20'
       };
     }
     return {
-      badge: 'bg-slate-100 text-slate-800',
-      tipsBorder: 'border-slate-400',
-      tipsBg: 'bg-slate-50',
+      badge: 'bg-slate-50 text-slate-700 border border-slate-200',
+      tipsBorder: 'border-slate-300',
+      tipsBg: 'bg-slate-50/50',
       tipsTitle: 'text-slate-900',
       tipsText: 'text-slate-800',
       button: 'bg-slate-800 hover:bg-slate-700 shadow-slate-900/20'
@@ -183,39 +183,46 @@ const App: React.FC = () => {
     const themeStyles = getIntroTheme(currentScenario.themeColor);
 
     return (
-      <div className="min-h-screen flex flex-col p-6 max-w-2xl mx-auto pb-10">
-        <div className="flex-1">
-          <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold tracking-wide mb-5 ${themeStyles.badge}`}>
-            MISSION BRIEFING
+      <div className="flex flex-col h-[calc(100vh-56px)] max-w-2xl mx-auto">
+        <div className="flex-1 overflow-y-auto px-6 py-4">
+          <div className="flex items-center gap-2 mb-3">
+            <span className={`px-2 py-0.5 rounded text-[10px] font-bold tracking-wide uppercase ${themeStyles.badge}`}>
+              Briefing
+            </span>
           </div>
-          <h1 className="text-3xl font-extrabold text-gray-900 mb-6 leading-tight">{currentScenario.title}</h1>
-          <div className="prose prose-lg text-gray-600 leading-relaxed mb-10 text-sm md:text-base">
+          
+          <h1 className="text-2xl font-extrabold text-gray-900 mb-3 leading-tight tracking-tight">
+            {currentScenario.title}
+          </h1>
+          
+          <div className="text-gray-600 leading-relaxed mb-6 text-sm">
             {currentScenario.description}
           </div>
           
-          <div className={`${themeStyles.tipsBg} border-l-4 ${themeStyles.tipsBorder} p-5 rounded-r-xl mb-8`}>
-            <h3 className={`font-bold ${themeStyles.tipsTitle} mb-3 flex items-center`}>
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              여러분의 임무
+          <div className={`${themeStyles.tipsBg} border-l-2 ${themeStyles.tipsBorder} p-4 rounded-r-xl mb-4`}>
+            <h3 className={`font-bold ${themeStyles.tipsTitle} text-sm mb-2 flex items-center`}>
+              <svg className="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              임무 목표
             </h3>
-            <ul className={`list-disc list-outside ml-4 text-sm ${themeStyles.tipsText} space-y-2`}>
-              <li>총 15개의 생존 물품이 주어집니다.</li>
-              <li>생존을 위해 가장 중요한 것부터 순위를 매기세요.</li>
+            <ul className={`list-disc list-outside ml-3 text-xs ${themeStyles.tipsText} space-y-1.5`}>
+              <li>15개의 생존 물품의 중요도 순위 결정</li>
               <li><strong>1위 (가장 중요)</strong> &rarr; <strong>15위 (가장 덜 중요)</strong></li>
-              <li>개인 판단 후 팀 합의 과정을 거칩니다.</li>
+              <li>개인 판단 후 팀 합의 과정 진행</li>
             </ul>
           </div>
         </div>
 
-        <button 
-          onClick={() => {
-            setGameState(prev => ({ ...prev, phase: 'PERSONAL_RANKING' }));
-            window.scrollTo(0, 0);
-          }}
-          className={`w-full py-4 rounded-2xl font-bold text-white text-lg shadow-lg transform transition active:scale-[0.98] ${themeStyles.button}`}
-        >
-          개인 순위 정하기 시작
-        </button>
+        <div className="p-4 bg-white border-t border-gray-100 shrink-0">
+          <button 
+            onClick={() => {
+              setGameState(prev => ({ ...prev, phase: 'PERSONAL_RANKING' }));
+              window.scrollTo(0, 0);
+            }}
+            className={`w-full py-4 rounded-2xl font-bold text-white text-lg shadow-lg transform transition active:scale-[0.98] ${themeStyles.button}`}
+          >
+            시작하기
+          </button>
+        </div>
       </div>
     );
   };
@@ -282,10 +289,10 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-gray-100 selection:text-gray-900">
+    <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-gray-100 selection:text-gray-900 overflow-hidden sm:overflow-auto">
       {/* Header for non-home pages */}
       {gameState.phase !== 'HOME' && (
-        <header className="sticky top-0 z-20 bg-white/95 backdrop-blur-sm border-b border-gray-100 px-5 py-3 flex items-center justify-between shadow-sm">
+        <header className="sticky top-0 z-20 bg-white/95 backdrop-blur-sm border-b border-gray-100 px-5 py-3 flex items-center justify-between shadow-sm h-[56px]">
           <button 
             onClick={() => setGameState({ scenarioId: null, phase: 'HOME', personalRanking: [], teamRanking: [] })}
             className="text-sm font-bold text-gray-500 hover:text-gray-900 flex items-center transition-colors"

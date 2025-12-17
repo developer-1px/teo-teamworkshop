@@ -136,7 +136,7 @@ const ScoreGauge: React.FC<{ score: number; label: string; delay?: number }> = (
         </div>
       </div>
       <div className={`mt-4 text-sm font-bold ${colorClass} transition-opacity duration-1000 ${mounted ? 'opacity-100' : 'opacity-0'}`}>
-        {score >= 80 ? '탁월함' : score >= 60 ? '좋음' : '노력 필요'}
+        {score >= 80 ? '탁월함' : score >= 60 ? '좋음' : ' '}
       </div>
     </div>
   );
